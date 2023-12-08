@@ -51,7 +51,7 @@ export default function Navbar() {
 
               {userToken ?
                 <li className="nav-item">
-                  <Link className="nav-link" to="/cart">Cart <span className='bg-danger text-white px-2'>{data != null ? data.count : '0'}</span></Link>
+                  <Link className="nav-link" to="/cart">Cart <span className='bg-danger text-white px-2 rounded-circle'>{data != null ? data.count : '0'}</span></Link>
                 </li>
                 : null}
 
