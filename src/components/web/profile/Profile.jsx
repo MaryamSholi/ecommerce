@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../context/User';
-import './Profile.css'
 
 export default function Profile() {
     let {  userData } = useContext(UserContext);
