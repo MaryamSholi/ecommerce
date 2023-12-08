@@ -1,34 +1,28 @@
 import React from 'react'
 import Input from '../../pages/Input';
 import { useFormik } from 'formik';
-import { loginSchema } from '../validation/Validate.js';
+import { forgetPasswordSchema } from '../validation/Validate.js';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from './../context/User';
 
-export default function Login() {
-    let { setUserToken, userToken } = useContext(UserContext);
+export default function ForgetPassword() {
     const navigate = useNavigate();
-
-    if (userToken) {
-        navigate(-1);
-    }
 
     const initialValues = {
         email: '',
         password: '',
+        code:'',
     };
     const onSubmit = async users => {
-        const { data } = await axios.post(`https://ecommerce-node4.vercel.app/auth/signin`, users);
-        console.log(data);
+      const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/auth/forgotPassword`, users);
+      console.log(data);
 
         if (data.message == 'success') {
-            localStorage.setItem('userToken', data.token);
-            setUserToken(data.token);
-            toast.success('login successfuly ', {
-                position: "bottom-center",
+            toast.success('password updated successfuly ', {
+                position: "top-center",
                 autoClose: false,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -37,13 +31,13 @@ export default function Login() {
                 progress: undefined,
                 theme: "dark",
             });
-            navigate('/');
+            navigate('/login');
         }
     };
     const formik = useFormik({
         initialValues,
         onSubmit,
-        validationSchema: loginSchema,
+        validationSchema: forgetPasswordSchema,
 
     });
     // console.log(formik);
@@ -65,6 +59,13 @@ export default function Login() {
                 title: 'User Password',
                 value: formik.values.password,
             },
+            {
+              id: 'code',
+              type: 'text',
+              name: 'code',
+              title: 'code',
+              value: formik.values.code,
+          },
 
         ];
     const renderInputs = inputs.map((input, index) =>
@@ -84,15 +85,12 @@ export default function Login() {
     return (
         <>
             <div className='container bg-secondary text-white pb-5'>
-                <h2 className='text-center py-5'>Create Account</h2>
+                <h2 className='text-center py-5'>Update Password</h2>
                 <form onSubmit={formik.handleSubmit}>
                     {renderInputs}
-                    <button type='submit' className='form-control bg-danger text-white' disabled={!formik.isValid} >Login</button>
+                    <button type='submit' className='form-control bg-danger text-white' disabled={!formik.isValid} >Update </button>
                 </form>
 
-                <div className='forgetPassword text-end pt-3 pe-3 '>
-                    <Link to={'/sendCode'} className='text-white'>Forget Password?</Link>
-                </div>
             </div>
 
 
