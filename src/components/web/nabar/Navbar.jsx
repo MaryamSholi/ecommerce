@@ -8,7 +8,7 @@ export default function Navbar() {
   let { userToken, setUserToken, userData, setUserData } = useContext(UserContext);
   let navigate = useNavigate();
 
-  const { getCartContext   } = useContext(CartContext);
+  const { getCartContext, count   } = useContext(CartContext);
 
   const getCart = async () => {
       const res = await getCartContext();
@@ -51,7 +51,7 @@ export default function Navbar() {
 
               {userToken ?
                 <li className="nav-item">
-                  <Link className="nav-link" to="/cart">Cart <span className='bg-danger text-white px-2 rounded-circle'>{data != null ? data.count : '0'}</span></Link>
+                  <Link className="nav-link" to="/cart">Cart <span className='bg-danger text-white px-2 rounded-circle'>{count}</span></Link>
                 </li>
                 : null}
 

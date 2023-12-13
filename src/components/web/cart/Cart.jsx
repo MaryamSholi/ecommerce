@@ -2,13 +2,14 @@ import React, { useContext } from 'react'
 import './Cart.css'
 import { CartContext } from '../context/Cart';
 import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
 
 export default function Cart() {
-    const { getCartContext, removeItemContext   } = useContext(CartContext);
-
+    const { getCartContext, removeItemContext, clearCartContext, increaseQtyContext, decreaseQtyContext } = useContext(CartContext);
     const getCart = async () => {
         const res = await getCartContext();
         return res;
+
     }
 
     const removeCart = async (productId) => {
@@ -16,17 +17,56 @@ export default function Cart() {
         return res;
     }
 
+    const clearCart = async () => {
+        const res = await clearCartContext();
+        return res;
+
+    }
+
+    const increaseQty = async (productId)=>{
+        const res = await increaseQtyContext(productId);
+        return res;
+    }
+
+    const decreaseQty = async (productId)=>{
+        const res = await decreaseQtyContext(productId);
+        return res;
+    }
+
     const { data, isLoading } = useQuery("cart", getCart);
     if (isLoading) {
         return <p>loading...</p>
     }
+
     console.log(data);
+
     return (
         <div className="cart">
             <div className="container">
                 <div className="row">
+
                     <div className="cart-items">
+
                         <div className="products" id="products">
+                        <div className='text-end pe-5'>
+                                <button className='btn  bg-danger text-white' onClick={() => clearCart()} >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width={24}
+                                        height={25}
+                                        viewBox="0 0 24 25"
+                                        fill="none"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            clipRule="evenodd"
+                                            d="M5.29289 5.79289C5.68342 5.40237 6.31658 5.40237 6.70711 5.79289L12 11.0858L17.2929 5.79289C17.6834 5.40237 18.3166 5.40237 18.7071 5.79289C19.0976 6.18342 19.0976 6.81658 18.7071 7.20711L13.4142 12.5L18.7071 17.7929C19.0976 18.1834 19.0976 18.8166 18.7071 19.2071C18.3166 19.5976 17.6834 19.5976 17.2929 19.2071L12 13.9142L6.70711 19.2071C6.31658 19.5976 5.68342 19.5976 5.29289 19.2071C4.90237 18.8166 4.90237 18.1834 5.29289 17.7929L10.5858 12.5L5.29289 7.20711C4.90237 6.81658 4.90237 6.18342 5.29289 5.79289Z"
+                                            fill="#fff"
+                                        />
+                                    </svg>
+                                    clear cart
+                                </button>
+                            </div>
                             <div className="item">
                                 <div className="product-info">
                                     <h2>Product</h2>
@@ -41,15 +81,16 @@ export default function Cart() {
                                     <h2>Subtotal</h2>
                                 </div>
                             </div>
+                           
 
                             {data?.products ? (data.products.map((product) =>
                                 <div className="item" key={product._id}>
                                     <div className="product-info">
-                                        <img src={product.details.mainImage.secure_url}/>
+                                        <img src={product.details.mainImage.secure_url} />
                                         <div className="product-details">
                                             <h2>{product.details.name}</h2>
                                             <span>Color:black</span>
-                                            <a href="#" onClick={()=>removeCart(product.details._id )}>
+                                            <a href="#" onClick={() => removeCart(product.details._id)}>
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     width={24}
@@ -69,7 +110,7 @@ export default function Cart() {
                                         </div>
                                     </div>
                                     <div className="quantity">
-                                        <button>
+                                        <button onClick={()=> decreaseQty(product.details._id)}>
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width={16}
@@ -87,7 +128,7 @@ export default function Cart() {
                                             </svg>
                                         </button>
                                         <span>{product.quantity}</span>
-                                        <button>
+                                        <button onClick={()=> increaseQty(product.details._id)}>
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width={16}
@@ -104,15 +145,11 @@ export default function Cart() {
                                             </svg>
                                         </button>
                                     </div>
-                                    <div className="price">${product.details.price }</div>
+                                    <div className="price">${product.details.price}</div>
                                     <div className="subtotal">${product.quantity * product.details.price}</div>
                                 </div>
 
                             )) : "<h2>cart is empty</h2>"}
-
-
-
-
 
                         </div>
                         <div className="cart-summary">
@@ -145,7 +182,7 @@ export default function Cart() {
                                     <span>$1345.00</span>
                                 </div>
                                 <div className="checkout">
-                                    <a href="#">Chekout</a>
+                                    <Link to="/order">Chekout</Link>
                                 </div>
                             </div>
                         </div>

@@ -29,7 +29,7 @@ export default function Product() {
       <div className='row'>
         <div className='col-lg-4'>
           {data.subImages.map((img, index) =>
-          <div className='image py-3' >
+          <div className='image py-3' key={index} >
                       <img src={img.secure_url} style={{height:'200px', width:'200px'}} />
 
           </div>

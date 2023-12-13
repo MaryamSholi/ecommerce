@@ -23,3 +23,9 @@ export const forgetPasswordSchema = yup.object({
     code: yup.string().required("code is required").min(4, "must be at least 4 characters").max(4, "must be at most 4 characters"),
 
 })
+
+export const orderSchema = yup.object({
+    address: yup.string().required("address is required"),
+    phone: yup.string().matches(/^\d{10}$/, 'Invalid phone number'),
+
+})

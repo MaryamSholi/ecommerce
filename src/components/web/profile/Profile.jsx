@@ -1,25 +1,32 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../context/User';
-
+import style from './Profile.module.css'
+import { Outlet, Link } from 'react-router-dom';
 export default function Profile() {
-    let {  userData } = useContext(UserContext);
+  const { userData, loading } = useContext(UserContext);
 
-    if(!userData)
-    {
-        return <p>loading....</p>
-    }
+  if (loading) {
+    return <p>...loading</p>
+  }
 
   return (
-    <div className='container py-5'>
-        <div className='profile text-center'>
-            <h1 className='pb-5'>My Profile</h1>
-            <img src={userData.image.secure_url} style={{width:'200px', height:'200px'}} />
-            <h2 className='py-2'>{userData.userName}</h2>
-            <p className='py-2 fs-6'>{userData.email}</p>
+    <aside className={`${style.profile} `}>
+      <div className={`${style.profileLinks}`}>
+        <nav className='pt-3'>
+          <Link to=''>info</Link>
+          <Link to='contact'>contact</Link>
+          <Link to='orders'>orders</Link>
 
-        
+        </nav>
+      </div>
 
-        </div>
-    </div>
+      <div className={`${style.userData} pt-3`}>
+        <Outlet />
+      </div>
+
+
+
+    </aside>
+
   )
 }

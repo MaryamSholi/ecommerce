@@ -14,11 +14,11 @@ export default function ForgetPassword() {
     const initialValues = {
         email: '',
         password: '',
-        code:'',
+        code: '',
     };
     const onSubmit = async users => {
-      const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/auth/forgotPassword`, users);
-      console.log(data);
+        const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/auth/forgotPassword`, users);
+        console.log(data);
 
         if (data.message == 'success') {
             toast.success('password updated successfuly ', {
@@ -40,7 +40,6 @@ export default function ForgetPassword() {
         validationSchema: forgetPasswordSchema,
 
     });
-    // console.log(formik);
 
 
     const inputs =
@@ -60,12 +59,12 @@ export default function ForgetPassword() {
                 value: formik.values.password,
             },
             {
-              id: 'code',
-              type: 'text',
-              name: 'code',
-              title: 'code',
-              value: formik.values.code,
-          },
+                id: 'code',
+                type: 'text',
+                name: 'code',
+                title: 'code',
+                value: formik.values.code,
+            },
 
         ];
     const renderInputs = inputs.map((input, index) =>
