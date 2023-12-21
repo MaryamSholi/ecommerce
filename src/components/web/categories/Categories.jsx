@@ -10,6 +10,7 @@ import 'swiper/css/scrollbar';
 import './Categories.css'
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/Cart';
+import Loader from '../../loader/Loader';
 
 export default function Categories() {
   const getCategories = async () => {
@@ -22,7 +23,7 @@ export default function Categories() {
 
   const { data, isLoading } = useQuery('web_categories', getCategories);
   if (isLoading) {
-    return <p>...Loading</p>
+    return <Loader />
   }
   return (
     <div className='container'>
