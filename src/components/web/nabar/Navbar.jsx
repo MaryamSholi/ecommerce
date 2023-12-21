@@ -1,18 +1,20 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/User';
 import { CartContext } from '../context/Cart';
 import { useQuery } from 'react-query';
 
+
 export default function Navbar() {
   let { userToken, setUserToken, userData, setUserData } = useContext(UserContext);
   let navigate = useNavigate();
 
-  const { getCartContext, count   } = useContext(CartContext);
+
+  const { getCartContext, count } = useContext(CartContext);
 
   const getCart = async () => {
-      const res = await getCartContext();
-      return res;
+    const res = await getCartContext();
+    return res;
   }
 
 
@@ -46,7 +48,7 @@ export default function Navbar() {
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="#">Products</a>
+                <Link className="nav-link" to="/products">Products</Link>
               </li>
 
               {userToken ?
@@ -75,14 +77,9 @@ export default function Navbar() {
                     <li><Link className="dropdown-item" onClick={logout} >logout</Link></li>
 
                   </>)}
-
-
-
-
                 </ul>
               </li>
             </ul>
-
           </div>
         </div>
       </nav>

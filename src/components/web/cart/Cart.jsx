@@ -1,8 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import './Cart.css'
 import { CartContext } from '../context/Cart';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
+import Loader from '../../loader/Loader';
 
 export default function Cart() {
     const { getCartContext, removeItemContext, clearCartContext, increaseQtyContext, decreaseQtyContext } = useContext(CartContext);
@@ -11,6 +12,7 @@ export default function Cart() {
         return res;
 
     }
+
 
     const removeCart = async (productId) => {
         const res = await removeItemContext(productId);
@@ -32,11 +34,23 @@ export default function Cart() {
         const res = await decreaseQtyContext(productId);
         return res;
     }
+    const { data, isLoading:getCartLoading } = useQuery("clear_cart", getCart);
+    const { data:clearData, isLoading:clearisLoading } = useQuery("cart", clearCart , {enabled:false });
+    const { data:inc, isLoading:incLoad } = useQuery("incQty", increaseQty , {enabled:false });
+    const { data:dec, isLoading:decLoad } = useQuery("decQty", decreaseQty , {enabled:false });
+    console.log(decLoad);
+    console.log(getCartLoading);
 
-    const { data, isLoading } = useQuery("cart", getCart);
-    if (isLoading) {
-        return <p>loading...</p>
+    useEffect(() => {
+        decreaseQty();
+
+    }, [dec]);
+  
+
+    if (getCartLoading || clearisLoading || incLoad || decLoad) {
+        return <Loader />
     }
+
 
     console.log(data);
 
@@ -187,7 +201,7 @@ export default function Cart() {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
+                    {/* <div className="row">
                         <h2>Have a coupon ?</h2>
                         <p>Add your code for an instant cart discount</p>
                         <div className="coupon-form">
@@ -206,7 +220,7 @@ export default function Cart() {
                             <input type="text" placeholder="Coupon Code" />
                             <button>Apply</button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

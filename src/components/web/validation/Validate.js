@@ -29,3 +29,9 @@ export const orderSchema = yup.object({
     phone: yup.string().matches(/^\d{10}$/, 'Invalid phone number'),
 
 })
+
+export const commentSchema = yup.object({
+    comment: yup.string().required("comment is required"),
+    rating: yup.string().matches(/^\d(\.\d)?$/, 'Invalid rating').min(0, "must be at least 0 ").max(5.0, "must be at most 5 "),
+
+})

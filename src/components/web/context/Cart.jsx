@@ -18,7 +18,7 @@ export function CartContextProvider({ children }) {
             if (data.message == 'success') {
                 toast.success('product added successfuly ', {
                     position: "top-right",
-                    autoClose: false,
+                    autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -78,7 +78,7 @@ export function CartContextProvider({ children }) {
             if (data.message == 'success') {
                 toast.success('cart cleared successfuly ', {
                     position: "top-right",
-                    autoClose: false,
+                    autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -124,6 +124,7 @@ export function CartContextProvider({ children }) {
             console.log(error);
         }
     }
+
 
 
     return <CartContext.Provider value={{ addToCartContext, getCartContext, removeItemContext, count, setCount, clearCartContext, increaseQtyContext, decreaseQtyContext }}>
