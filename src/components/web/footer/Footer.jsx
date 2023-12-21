@@ -4,9 +4,9 @@ import './Foooter.css'
 export default function Footer() {
   return (
 
-    <div className=" my-5">
+    <div className=" ">
       <footer className="text-center text-lg-start text-white bg-danger" style={{ backgroundColor: '#45526e' }}>
-        <div className="container p-2 pb-0">
+        <div className="container  pb-0">
           <section className>
             <div className="row">
               <div className="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
