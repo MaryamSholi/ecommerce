@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from 'react-query';
 import { CartContext } from '../context/Cart';
 import { toast } from 'react-toastify';
@@ -12,6 +12,7 @@ import Loader from '../../loader/Loader';
 export default function Product() {
   const { productId } = useParams();
   const { addToCartContext } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const initialValues = {
     comment: '',
@@ -63,6 +64,7 @@ export default function Product() {
 
   const addToCart = async (productId) => {
     const res = await addToCartContext(productId);
+    navigate('/cart');
     return res;
     console.log(res);
   }

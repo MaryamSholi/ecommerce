@@ -4,12 +4,12 @@ import { useFormik } from 'formik';
 import { orderSchema } from '../validation/Validate.js';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 export default function CreateOrder() {
 
-
+const navigate = useNavigate();
 
     const initialValues = {
         couponName: '',
@@ -20,7 +20,8 @@ export default function CreateOrder() {
         const token = localStorage.getItem("userToken");
 
         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/order`, users,
-            { headers: { Authorization: `Tariq__${token}` } }
+            { headers: { Authorization: `Tariimport Loader from './../../loader/Loader';
+q__${token}` } }
         );
         console.log(data);
 
@@ -34,7 +35,10 @@ export default function CreateOrder() {
                 draggable: true,
                 progress: undefined,
                 theme: "dark",
+                
             });
+            navigate('/profile/orders');
+
         }
     };
     const formik = useFormik({

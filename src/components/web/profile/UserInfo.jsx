@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../context/User';
+import Loader from '../../loader/Loader';
 
 export default function UserInfo() {
     const { userData, loading } = useContext(UserContext);
 
     if (loading) {
-        return <p>...loading</p>
+        return <Loader />
     }
     return (
         <div >

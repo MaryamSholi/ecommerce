@@ -176,7 +176,7 @@ export default function AllProducts() {
             }
         }
 
-        else {
+        else if(search=='' && sortValue=='' && min=='' && max=='') {
             // getAllProducts();
             try {
                 const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/products?page=${page}&limit=${productPerPage}`);

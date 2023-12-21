@@ -1,17 +1,18 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../context/User';
+import Loader from '../../loader/Loader';
 
 export default function UserOrders() {
     const { userOrders, loading } = useContext(UserContext);
 
     if (loading) {
-        return <p>...loading</p>
+        return <Loader />
     }
     return (
         <div >
             <div className='row '>          
             {userOrders?.orders ? (userOrders.orders.map((order,index) =>
-                <div className='order col-md-4 ' key={order._id}>
+                <div className='order col-md-3 ' key={order._id}>
                     <h2 className='pt-3' >order {index+1} details</h2>
                     <div className='order-details'>
                         <p>status: {order.status}  </p>
